@@ -11,7 +11,8 @@ export const HomeLayout = () => {
     if (fileUrl) {
       loadPdfUrl(fileUrl);
     }
-  }, [file]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [file, loadPdfUrl]);
 
   return (
     <main className={"m-8 flex min-h-screen flex-col items-center pt-24"}>

@@ -83,11 +83,6 @@
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/models/**,@contracter/src/models}",
-            "group": "external",
-            "position": "after"
-          },
-          {
             "pattern": "{@contracter/src/hooks/**,@contracter/src/hooks}",
             "group": "internal",
             "position": "before"

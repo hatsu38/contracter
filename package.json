@@ -35,7 +35,6 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "prettier": "^2.8.8",
-    "typescript-eslint": "^0.0.1-alpha.0"
+    "prettier": "^2.8.8"
   }
 }
