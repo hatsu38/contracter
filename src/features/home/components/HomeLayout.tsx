@@ -1,8 +1,17 @@
+import { useEffect } from "react";
+
 import { DropzoneFileField, Icon } from "@contracter/components";
-import { useFile } from "@contracter/features/home/hooks";
+import { useFile, usePdfLoad } from "@contracter/hooks";
 
 export const HomeLayout = () => {
-  const { file, handleDropFile } = useFile();
+  const { file, handleDropFile, fileUrl } = useFile();
+  const { pdfText, loadPdfUrl } = usePdfLoad();
+
+  useEffect(() => {
+    if (fileUrl) {
+      loadPdfUrl(fileUrl);
+    }
+  }, [file]);
 
   return (
     <main className={"m-8 flex min-h-screen flex-col items-center pt-24"}>
@@ -26,6 +35,9 @@ export const HomeLayout = () => {
           </div>
         </DropzoneFileField>
       </div>
+      <p className="max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
+        {pdfText}
+      </p>
     </main>
   );
 };
