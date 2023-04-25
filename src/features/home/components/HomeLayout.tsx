@@ -1,16 +1,27 @@
 import { useEffect } from "react";
 
-import { DropzoneFileField, Icon } from "@keiyomi/components";
-import { useFile, usePdfLoad } from "@keiyomi/hooks";
+import { Button, DropzoneFileField, Icon } from "@keiyomi/components";
+import { useContractSummaryRequest } from "@keiyomi/features/home";
+import { useFile, usePdfLoad, useInput } from "@keiyomi/hooks";
 
 export const HomeLayout = () => {
   const { file, handleDropFile, fileUrl } = useFile();
   const { pdfText, loadPdfUrl } = usePdfLoad();
+  const [{ value: summaryText }, setSummaryText] = useInput("");
+  const { doSummaryRequest, isChatRequesting } = useContractSummaryRequest("");
 
   useEffect(() => {
     if (fileUrl) loadPdfUrl(fileUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
+
+  const handleAiRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    doSummaryRequest({
+      message: "This is a contract between John and Acme.",
+      onSuccess: (data) => setSummaryText(data.chatMessage.content),
+    });
+  };
 
   return (
     <main
@@ -37,14 +48,30 @@ export const HomeLayout = () => {
               className="mx-auto"
             />
             <p className="mt-2 font-semibold">
-              {file ? file.name : "契約書をPDFをインポート"}{" "}
+              {file ? file.name : "契約書をPDFをインポート"}
             </p>
           </div>
         </DropzoneFileField>
         {file && (
-          <p className="bg-white shadow mt-8 max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
-            {pdfText}
-          </p>
+          <div className="mt-8">
+            <div className="text-center">
+              <Button
+                text="契約書を要約"
+                onClick={handleAiRequest}
+                color="primary"
+                variant="outlined"
+                disabled={isChatRequesting}
+              />
+            </div>
+            {summaryText && (
+              <p className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
+                {summaryText}
+              </p>
+            )}
+            <p className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
+              {pdfText}
+            </p>
+          </div>
         )}
       </div>
     </main>

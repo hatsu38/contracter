@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 import { useBoolean } from "@keiyomi/hooks";
 
-type OnSuccessType = {
+export type OpenAiOnSuccessType = {
   chatMessage: ChatCompletionResponseMessage;
   data: CreateChatCompletionResponse;
 };
@@ -17,7 +17,7 @@ type OpenAIRequestType = {
   prompt: string;
   systemMessage?: string;
   alreadyMessages?: ChatCompletionResponseMessage[];
-  onSuccess?: ({ data, chatMessage }: OnSuccessType) => void;
+  onSuccess?: ({ data, chatMessage }: OpenAiOnSuccessType) => void;
   onError?: (error: Error) => void;
 };
 
