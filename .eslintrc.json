@@ -37,7 +37,7 @@
       "error",
       {
         "name": "aws-amplify",
-        "message": "Use `@spesill/libs/aws` instead."
+        "message": "Use `@contracter/libs/aws` instead."
       }
     ],
     "import/order": [
@@ -67,47 +67,47 @@
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/libs/**,@spesill/src/libs}",
+            "pattern": "{@contracter/src/libs/**,@contracter/src/libs}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/utils/**,@spesill/src/utils}",
+            "pattern": "{@contracter/src/utils/**,@contracter/src/utils}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/apis/**,@spesill/src/apis}",
+            "pattern": "{@contracter/src/apis/**,@contracter/src/apis}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/models/**,@spesill/src/models}",
+            "pattern": "{@contracter/src/models/**,@contracter/src/models}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/hooks/**,@spesill/src/hooks}",
+            "pattern": "{@contracter/src/hooks/**,@contracter/src/hooks}",
             "group": "internal",
             "position": "before"
           },
           {
-            "pattern": "@spesill/components/**",
+            "pattern": "@contracter/components/**",
             "group": "internal",
             "position": "before"
           },
           {
-            "pattern": "{@spesill/src/config/**,@spesill/src/config}",
+            "pattern": "{@contracter/src/config/**,@contracter/src/config}",
             "group": "index",
             "position": "after"
           },
           {
-            "pattern": "{@spesill/src/domains/**,@spesill/src/domains}",
+            "pattern": "{@contracter/src/domains/**,@contracter/src/domains}",
             "group": "type",
             "position": "before"
           },
           {
-            "pattern": "{@spesill/src/constants/**,@spesill/src/constants}",
+            "pattern": "{@contracter/src/constants/**,@contracter/src/constants}",
             "group": "type",
             "position": "after"
           }
