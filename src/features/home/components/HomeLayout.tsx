@@ -10,33 +10,43 @@ export const HomeLayout = () => {
   useEffect(() => {
     if (fileUrl) loadPdfUrl(fileUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, loadPdfUrl]);
+  }, [file]);
 
   return (
-    <main className={"m-8 flex min-h-screen flex-col items-center pt-24"}>
-      <h1 className="text-red">契約書PDFを読み込み</h1>
-      <div className="shadow p-8 space-y-6">
+    <main
+      className={
+        "flex min-h-screen flex-col items-center pt-16 bg-gradient-to-b from-primary-100 to-primary-400"
+      }
+    >
+      <div className="container mx-auto">
+        <h1 className="text-4xl font-bold text-center text-primary-500">
+          ケイヨミ
+        </h1>
         <DropzoneFileField
+          className="shadow mt-8 block w-full p-2 bg-white rounded-lg"
           onDropFiles={handleDropFile}
-          fileClassName={`cursor-pointer rounded py-2 ${
-            file ? "bg-primary-200" : "bg-gray-300"
-          }`}
+          fileClassName={
+            "bg-gray-50 cursor-pointer border border-primary-600 border-dotted rounded-xl py-8"
+          }
         >
-          <div className="flex justify-center items-center text-white ">
-            {file ? (
-              <p>{file.name}</p>
-            ) : (
-              <>
-                <Icon icon="aiOutlinePlus" size="2rem" color="text-white" />
-                <p>契約書をインポート</p>
-              </>
-            )}
+          <div className="text-center text-primary-400">
+            <Icon
+              icon="biImport"
+              size="2rem"
+              color="text-primary-800"
+              className="mx-auto"
+            />
+            <p className="mt-2 font-semibold">
+              {file ? file.name : "契約書をPDFをインポート"}{" "}
+            </p>
           </div>
         </DropzoneFileField>
+        {file && (
+          <p className="bg-white shadow mt-8 max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
+            {pdfText}
+          </p>
+        )}
       </div>
-      <p className="max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
-        {pdfText}
-      </p>
     </main>
   );
 };
