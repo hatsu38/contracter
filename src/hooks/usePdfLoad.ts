@@ -19,9 +19,9 @@ export const usePdfLoad = (): ReturnType => {
         pdf.getPage(index + 1).then((page) => {
           page.getTextContent().then((textContent) => {
             const text = textContent.items.map((item) =>
-              "str" in item ? item.str : ""
+              "str" in item && item.str ? item.str : "\n\n"
             );
-            setPdfText((prev) => prev + text.join("\n"));
+            setPdfText((prev) => prev + text.join(""));
           });
         });
       });
