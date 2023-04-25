@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
+import { BiImport } from "react-icons/bi";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 
 export const ICONS = [
@@ -7,6 +8,7 @@ export const ICONS = [
   "hiOutlineEyeOff",
   "aiOutlinePlus",
   "aiOutlineClose",
+  "biImport",
 ] as const satisfies readonly string[];
 
 export type IconType = (typeof ICONS)[number];
@@ -35,6 +37,7 @@ export const Icon: FC<IconPropsType> = ({
     hiOutlineEyeOff: <HiOutlineEyeOff {...iconProps} />,
     aiOutlinePlus: <AiOutlinePlus {...iconProps} />,
     aiOutlineClose: <AiOutlineClose {...iconProps} />,
+    biImport: <BiImport {...iconProps} />,
   };
 
   return icons[icon];
