@@ -1,0 +1,10 @@
+# Ignore artifacts:
+build
+dist
+coverage
+.github
+.codeclimate.yml
+*.md
+.env
+.next
+.vscode
