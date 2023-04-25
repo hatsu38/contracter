@@ -18,6 +18,7 @@
     "import/extensions": [".ts", ".tsx", ".js", ".jsx"]
   },
   "rules": {
+    "react/react-in-jsx-scope": "off", // Reactのimportを不要にする
     "eqeqeq": [2, "smart"], // ===にする
     "quotes": ["error", "double"], // ダブルオーテーションで文字列を囲う
     "semi": ["error", "always"], // セミコロンを必須にする
