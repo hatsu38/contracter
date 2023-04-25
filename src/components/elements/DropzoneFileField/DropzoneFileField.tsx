@@ -11,6 +11,7 @@ import { FILE_MAX_BYTE_SIZE, ACCEPT_IMPORT_FILE_TYPES } from "./constants";
 
 type PropsType = {
   noClick?: boolean;
+  className?: string;
   fileClassName?: string;
   multiple?: boolean;
   onDropFiles: (acceptedFiles: File[], fileRejections: FileRejection[]) => void;
@@ -29,7 +30,8 @@ export const DropzoneFileField: FC<PropsType> = ({
   acceptFileTypes = ACCEPT_IMPORT_FILE_TYPES,
   maxFileByte = FILE_MAX_BYTE_SIZE,
   minFileByte = 0,
-  fileClassName,
+  className = "",
+  fileClassName = "",
   readonly = false,
   children,
   maxFiles,
@@ -66,7 +68,7 @@ export const DropzoneFileField: FC<PropsType> = ({
   };
 
   return (
-    <div>
+    <div className={className}>
       <ReactDropzone
         maxFiles={maxFiles}
         noClick={noClick}
