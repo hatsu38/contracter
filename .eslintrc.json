@@ -38,7 +38,7 @@
       "error",
       {
         "name": "aws-amplify",
-        "message": "Use `@contracter/libs/aws` instead."
+        "message": "Use `@keiyomi/libs/aws` instead."
       }
     ],
     "import/order": [
@@ -68,42 +68,42 @@
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/libs/**,@contracter/src/libs}",
+            "pattern": "{@keiyomi/src/libs/**,@keiyomi/src/libs}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/utils/**,@contracter/src/utils}",
+            "pattern": "{@keiyomi/src/utils/**,@keiyomi/src/utils}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/apis/**,@contracter/src/apis}",
+            "pattern": "{@keiyomi/src/apis/**,@keiyomi/src/apis}",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/hooks/**,@contracter/src/hooks}",
+            "pattern": "{@keiyomi/src/hooks/**,@keiyomi/src/hooks}",
             "group": "internal",
             "position": "before"
           },
           {
-            "pattern": "@contracter/components/**",
+            "pattern": "@keiyomi/components/**",
             "group": "internal",
             "position": "before"
           },
           {
-            "pattern": "{@contracter/src/config/**,@contracter/src/config}",
+            "pattern": "{@keiyomi/src/config/**,@keiyomi/src/config}",
             "group": "index",
             "position": "after"
           },
           {
-            "pattern": "{@contracter/src/domains/**,@contracter/src/domains}",
+            "pattern": "{@keiyomi/src/domains/**,@keiyomi/src/domains}",
             "group": "type",
             "position": "before"
           },
           {
-            "pattern": "{@contracter/src/constants/**,@contracter/src/constants}",
+            "pattern": "{@keiyomi/src/constants/**,@keiyomi/src/constants}",
             "group": "type",
             "position": "after"
           }
