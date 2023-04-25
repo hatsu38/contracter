@@ -1,3 +1,118 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["import"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/extensions": [".ts", ".tsx", ".js", ".jsx"]
+  },
+  "rules": {
+    "eqeqeq": [2, "smart"], // ===にする
+    "quotes": ["error", "double"], // ダブルオーテーションで文字列を囲う
+    "semi": ["error", "always"], // セミコロンを必須にする
+    "prefer-const": "error", // 再代入を行わない変数はconstを利用
+    "no-var": "error", // var禁止
+    "no-debugger": "error", // デバッガーは残さない
+    "react/button-has-type": "error", // buttonにtypeを必須にする
+    // 未使用の値はエラーにする
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" } // ただし _hoge などはok
+    ],
+    "jsx-a11y/no-static-element-interactions": "off", // divにonClickをつけることを許可
+    "jsx-a11y/click-events-have-key-events": "off", // divにonClickをつけることを許可
+    // import禁止のルール
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "aws-amplify",
+        "message": "Use `@spesill/libs/aws` instead."
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["builtin", "object"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          {
+            "pattern": "{react}",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "{next,next/**}",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/libs/**,@spesill/src/libs}",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/utils/**,@spesill/src/utils}",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/apis/**,@spesill/src/apis}",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/models/**,@spesill/src/models}",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/hooks/**,@spesill/src/hooks}",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@spesill/components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "{@spesill/src/config/**,@spesill/src/config}",
+            "group": "index",
+            "position": "after"
+          },
+          {
+            "pattern": "{@spesill/src/domains/**,@spesill/src/domains}",
+            "group": "type",
+            "position": "before"
+          },
+          {
+            "pattern": "{@spesill/src/constants/**,@spesill/src/constants}",
+            "group": "type",
+            "position": "after"
+          }
+        ]
+      }
+    ]
+  }
 }
