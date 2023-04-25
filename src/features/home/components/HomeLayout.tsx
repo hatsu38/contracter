@@ -1,16 +1,14 @@
 import { useEffect } from "react";
 
-import { DropzoneFileField, Icon } from "@contracter/components";
-import { useFile, usePdfLoad } from "@contracter/hooks";
+import { DropzoneFileField, Icon } from "@keiyomi/components";
+import { useFile, usePdfLoad } from "@keiyomi/hooks";
 
 export const HomeLayout = () => {
   const { file, handleDropFile, fileUrl } = useFile();
   const { pdfText, loadPdfUrl } = usePdfLoad();
 
   useEffect(() => {
-    if (fileUrl) {
-      loadPdfUrl(fileUrl);
-    }
+    if (fileUrl) loadPdfUrl(fileUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, loadPdfUrl]);
 

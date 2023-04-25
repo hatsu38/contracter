@@ -1,4 +1,4 @@
-import { HomeLayout } from "@contracter/features/home";
+import { HomeLayout } from "@keiyomi/features/home";
 
 export default function Home() {
   return <HomeLayout />;

@@ -5,7 +5,7 @@ import ReactDropzone, {
   ErrorCode,
 } from "react-dropzone";
 
-import { convertReadableByte } from "@contracter/utils";
+import { convertReadableByte } from "@keiyomi/utils";
 
 import { FILE_MAX_BYTE_SIZE, ACCEPT_IMPORT_FILE_TYPES } from "./constants";
 
