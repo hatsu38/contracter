@@ -1,20 +1,24 @@
 import { GlobalWorkerOptions, version, getDocument } from "pdfjs-dist";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+import { useHtmlParse, type SectionType } from "./useHtmlParse";
 
 type ReturnType = {
   loadPdfUrl: (pdfUrl: string) => void;
   pdfHtml: string;
+  sections: SectionType[];
 };
 
 const h2Regex = /^第.{1,2}条.+$/gm;
 const pTextRegex = /<\/p>\s*<p>/gm;
 
 export const usePdfLoad = (): ReturnType => {
+  const { sections, htmlParse } = useHtmlParse();
   GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
   const [pdfHtml, setPdfHtml] = useState<string>("");
 
-  const loadPdfUrl = (pdfUrl: string) => {
+  const loadPdfUrl = useCallback((pdfUrl: string) => {
     const loadingTask = getDocument(pdfUrl);
     loadingTask.promise.then((pdf) => {
       const numPages = pdf.numPages;
@@ -33,11 +37,17 @@ export const usePdfLoad = (): ReturnType => {
         });
       });
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    pdfHtml && htmlParse(pdfHtml);
+    console.log("parse");
+  }, [pdfHtml, htmlParse]);
 
   return {
     loadPdfUrl,
     pdfHtml,
+    sections,
   };
 };
 
