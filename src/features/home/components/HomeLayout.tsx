@@ -6,19 +6,20 @@ import { useFile, usePdfLoad, useInput } from "@keiyomi/hooks";
 
 export const HomeLayout = () => {
   const { file, handleDropFile, fileUrl } = useFile();
-  const { pdfText, loadPdfUrl } = usePdfLoad();
+  const { pdfHtml, sections, loadPdfUrl } = usePdfLoad();
   const [{ value: summaryText }, setSummaryText] = useInput("");
   const { doSummaryRequest, isChatRequesting } = useContractSummaryRequest("");
 
   useEffect(() => {
     if (fileUrl) loadPdfUrl(fileUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file]);
+  }, [file, loadPdfUrl]);
 
   const handleAiRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     doSummaryRequest({
-      message: "This is a contract between John and Acme.",
+      message: sections[0].sectionContent || "",
       onSuccess: (data) => setSummaryText(data.chatMessage.content),
     });
   };
@@ -68,9 +69,10 @@ export const HomeLayout = () => {
                 {summaryText}
               </p>
             )}
-            <p className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
-              {pdfText}
-            </p>
+            <div
+              className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: pdfHtml }}
+            />
           </div>
         )}
       </div>
