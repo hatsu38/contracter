@@ -10,6 +10,12 @@ type ReturnType = {
   isChatRequesting: boolean;
 };
 
+const systemMessage = `
+* あなたは与えられたテキストを10歳の子どもにもわかる言葉で説明してください
+* 子供たちが理解しやすいような簡単な短い日本語で話してください
+* 敬語ではなく話し言葉を使ってください
+`;
+
 export const useContractSummaryRequest = (
   currentEmployeeId: string
 ): ReturnType => {
@@ -19,8 +25,7 @@ export const useContractSummaryRequest = (
   const doSummaryRequest = ({ message, onSuccess }: ApiRequestType) => {
     openAiRequest({
       prompt: message,
-      systemMessage:
-        "あなたは与えられたテキストを10歳の子どもにもわかる言葉で説明するAIです。",
+      systemMessage,
       onSuccess,
     });
   };
