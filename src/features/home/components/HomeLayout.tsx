@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 
 import { Button, DropzoneFileField, Icon } from "@keiyomi/components";
-import { useContractSummaryRequest } from "@keiyomi/features/home";
-import { useFile, usePdfLoad, useInput } from "@keiyomi/hooks";
+import { useContractSummaryRequest, SectionType } from "@keiyomi/features/home";
+import { useFile, usePdfLoad, useArray } from "@keiyomi/hooks";
+
+type SummarySectionType = SectionType & {
+  sectionSummary: string;
+};
 
 export const HomeLayout = () => {
   const { file, handleDropFile, fileUrl } = useFile();
   const { pdfHtml, sections, loadPdfUrl } = usePdfLoad();
-  const [{ value: summaryText }, setSummaryText] = useInput("");
+  const { items, unshiftItem } = useArray<SummarySectionType>();
   const { doSummaryRequest, isChatRequesting } = useContractSummaryRequest("");
 
   useEffect(() => {
@@ -17,17 +21,20 @@ export const HomeLayout = () => {
 
   const handleAiRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    doSummaryRequest({
-      message: sections[0].sectionContent || "",
-      onSuccess: (data) => setSummaryText(data.chatMessage.content),
+    sections.map((section) => {
+      doSummaryRequest({
+        message: `${section.sectionTitle}\n${section.sectionContent}`,
+        onSuccess: (data) => {
+          unshiftItem({ ...section, sectionSummary: data.chatMessage.content });
+        },
+      });
     });
   };
 
   return (
     <main
       className={
-        "flex min-h-screen flex-col items-center pt-16 bg-gradient-to-b from-primary-100 to-primary-400"
+        "flex min-h-screen flex-col items-center py-16 bg-gradient-to-b from-primary-100 to-primary-400"
       }
     >
       <div className="container mx-auto">
@@ -53,6 +60,20 @@ export const HomeLayout = () => {
             </p>
           </div>
         </DropzoneFileField>
+        {!!items.length && (
+          <div className="mt-8 bg-white px-10 py-8 rounded">
+            {items
+              .sort((a, b) => (a.id < b.id ? -1 : 1))
+              .map((item, index) => (
+                <section className="pt-10" key={`${item.sectionId}-${index}`}>
+                  <h2 className="font-bold">{item.sectionTitle}</h2>
+                  <p className="text-sm whitespace-pre-wrap ">
+                    {item.sectionSummary}
+                  </p>
+                </section>
+              ))}
+          </div>
+        )}
         {file && (
           <div className="mt-8">
             <div className="text-center">
@@ -64,11 +85,6 @@ export const HomeLayout = () => {
                 disabled={isChatRequesting}
               />
             </div>
-            {summaryText && (
-              <p className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap ">
-                {summaryText}
-              </p>
-            )}
             <div
               className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap"
               dangerouslySetInnerHTML={{ __html: pdfHtml }}
