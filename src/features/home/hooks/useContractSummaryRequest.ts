@@ -19,7 +19,8 @@ export const useContractSummaryRequest = (
   const doSummaryRequest = ({ message, onSuccess }: ApiRequestType) => {
     openAiRequest({
       prompt: message,
-      systemMessage: "あなたは10歳にもわかる言葉で説明するAIです。",
+      systemMessage:
+        "あなたは与えられたテキストを10歳の子どもにもわかる言葉で説明するAIです。",
       onSuccess,
     });
   };

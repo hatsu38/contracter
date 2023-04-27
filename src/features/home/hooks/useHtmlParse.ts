@@ -6,6 +6,7 @@ type ReturnType = {
 };
 
 export type SectionType = {
+  id: number;
   sectionId: string;
   sectionTitle: string | undefined;
   sectionContent: string | undefined;
@@ -22,6 +23,7 @@ export const useHtmlParse = (): ReturnType => {
     );
 
     const array = pdfSections.map((section) => ({
+      id: parseInt(section.id.replace("pdfSection-", "")),
       sectionId: section.id,
       sectionTitle: section.textContent || undefined,
       sectionContent: section.nextElementSibling?.textContent || undefined,

@@ -9,7 +9,7 @@ type ReturnType = {
   sections: SectionType[];
 };
 
-const h2Regex = /^第.{1,2}条.+$/gm;
+const h2Regex = /^第.{1,2}条[^、,。].+$/gm;
 const pTextRegex = /<\/p>\s*<p>/gm;
 
 export const usePdfLoad = (): ReturnType => {
@@ -41,7 +41,6 @@ export const usePdfLoad = (): ReturnType => {
 
   useEffect(() => {
     pdfHtml && htmlParse(pdfHtml);
-    console.log("parse");
   }, [pdfHtml, htmlParse]);
 
   return {
@@ -54,7 +53,11 @@ export const usePdfLoad = (): ReturnType => {
 const generateStrHtml = (str: string) => {
   if (str.match(h2Regex)) {
     const id = str.substring(0, str.indexOf("条")).replace("第", "");
-    return `<h2 id="pdfSection-${id}">${str}</h2>`;
+    // NOTE: idを全角数字の時に、半角にする
+    const formattedId = id.replace(/[０-９]/g, (s) => {
+      return String.fromCharCode(s.charCodeAt(0) - 65248);
+    });
+    return `<h2 id="pdfSection-${formattedId}">${str}</h2>`;
   }
   return `<p>${str || "\n\n"}</p>`;
 };
