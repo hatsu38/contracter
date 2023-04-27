@@ -1,52 +1,60 @@
 import { GlobalWorkerOptions, version, getDocument } from "pdfjs-dist";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
-import { useHtmlParse, type SectionType } from "./useHtmlParse";
+import {
+  useHtmlParse,
+  type SectionType,
+  SummarySectionType,
+} from "./useHtmlParse";
 
 type ReturnType = {
   loadPdfUrl: (pdfUrl: string) => void;
   pdfHtml: string;
+  isChatRequesting: boolean;
   sections: SectionType[];
+  summarySections: SummarySectionType[];
 };
 
 const h2Regex = /^第.{1,2}条[^、,。].+$/gm;
 const pTextRegex = /<\/p>\s*<p>/gm;
 
 export const usePdfLoad = (): ReturnType => {
-  const { sections, htmlParse } = useHtmlParse();
+  const { sections, htmlParse, isChatRequesting, summarySections } =
+    useHtmlParse();
   GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
   const [pdfHtml, setPdfHtml] = useState<string>("");
 
-  const loadPdfUrl = useCallback((pdfUrl: string) => {
+  const loadPdfUrl = async (pdfUrl: string) => {
     const loadingTask = getDocument(pdfUrl);
-    loadingTask.promise.then((pdf) => {
-      const numPages = pdf.numPages;
-      [...Array(numPages)].map((_, index) => {
-        pdf.getPage(index + 1).then((page) => {
-          page.getTextContent().then((textContent) => {
-            const text = textContent.items.map(
-              (item) => "str" in item && generateStrHtml(item.str)
-            );
-            const prevText = index === 0 ? "" : "\n\n";
-            setPdfHtml(
-              (prev) =>
-                prev + `${prevText}${text.join("").replace(pTextRegex, "")}`
-            );
-          });
-        });
-      });
-    });
-  }, []);
+    const pdf = await loadingTask.promise;
 
-  useEffect(() => {
-    pdfHtml && htmlParse(pdfHtml);
-  }, [pdfHtml, htmlParse]);
+    const html = await Promise.all(
+      [...Array(pdf.numPages)].map(async (_, index) => {
+        const page = await pdf.getPage(index + 1);
+        const textContent = await page.getTextContent();
+        const text = textContent.items.map(
+          (item) => "str" in item && generateStrHtml(item.str)
+        );
+        const prevText = index === 0 ? "" : "\n\n";
+        return `${prevText}${text
+          .join("")
+          .replace(pTextRegex, "")
+          .replace(/<p>\n+/gm, "<p>")
+          .replace(/\n+<\/p>/gm, "</p>")}`;
+      })
+    );
+    const newHtml = html.join("");
+    setPdfHtml(newHtml);
+    htmlParse(newHtml);
+  };
 
   return {
     loadPdfUrl,
     pdfHtml,
     sections,
+    isChatRequesting,
+    summarySections,
   };
 };
 

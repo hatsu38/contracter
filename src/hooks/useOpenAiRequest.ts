@@ -64,6 +64,7 @@ export const useOpenAiRequest = (authUserName: string): ReturnType => {
         messages: messages,
         user: authUserName,
         max_tokens: 2048,
+        temperature: 0,
       });
       setFalse();
       const message = completion.data.choices.at(-1)?.message;

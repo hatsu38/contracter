@@ -1,4 +1,4 @@
-export { useFile } from "./useFile";
+export { useFile } from "../features/home/hooks/useFile";
 export { usePdfLoad } from "../features/home/hooks/usePdfLoad";
 export { useBoolean } from "./useBoolean";
 export { useInput } from "./useInput";

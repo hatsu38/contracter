@@ -2,10 +2,17 @@ import { useState } from "react";
 import { FileRejection } from "react-dropzone";
 import { toast } from "react-toastify";
 
+import { SectionType, SummarySectionType } from "@keiyomi/features/home";
+import { usePdfLoad } from "@keiyomi/hooks";
+
 type ReturnType = {
   file: File | undefined;
   setFile: (value: File | undefined) => void;
   fileUrl: string | undefined;
+  pdfHtml: string;
+  sections: SectionType[];
+  summarySections: SummarySectionType[];
+  isChatRequesting: boolean;
   handleDropFile: (
     acceptedFiles: File[],
     fileRejections: FileRejection[]
@@ -13,6 +20,8 @@ type ReturnType = {
 };
 
 export const useFile = (): ReturnType => {
+  const { pdfHtml, sections, summarySections, isChatRequesting, loadPdfUrl } =
+    usePdfLoad();
   const [file, setFile] = useState<File | undefined>();
 
   const fileUrl = file ? URL.createObjectURL(file) : undefined;
@@ -28,12 +37,18 @@ export const useFile = (): ReturnType => {
       });
       return;
     }
-    setFile(acceptedFiles[0]);
+    const newFile = acceptedFiles[0];
+    setFile(newFile);
+    loadPdfUrl(URL.createObjectURL(newFile));
   };
 
   return {
     file,
     fileUrl,
+    pdfHtml,
+    sections,
+    summarySections,
+    isChatRequesting,
     setFile,
     handleDropFile,
   };

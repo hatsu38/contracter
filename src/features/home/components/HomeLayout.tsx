@@ -1,35 +1,11 @@
-import { useEffect } from "react";
+import { DropzoneFileField, Icon } from "@keiyomi/components";
+import { useFile } from "@keiyomi/hooks";
 
-import { Button, DropzoneFileField, Icon } from "@keiyomi/components";
-import { useContractSummaryRequest, SectionType } from "@keiyomi/features/home";
-import { useFile, usePdfLoad, useArray } from "@keiyomi/hooks";
-
-type SummarySectionType = SectionType & {
-  sectionSummary: string;
-};
+import { SectionsBlock } from "./SectionsBlock";
 
 export const HomeLayout = () => {
-  const { file, handleDropFile, fileUrl } = useFile();
-  const { pdfHtml, sections, loadPdfUrl } = usePdfLoad();
-  const { items, unshiftItem } = useArray<SummarySectionType>();
-  const { doSummaryRequest, isChatRequesting } = useContractSummaryRequest("");
-
-  useEffect(() => {
-    if (fileUrl) loadPdfUrl(fileUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, loadPdfUrl]);
-
-  const handleAiRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    sections.map((section) => {
-      doSummaryRequest({
-        message: `${section.sectionTitle}\n${section.sectionContent}`,
-        onSuccess: (data) => {
-          unshiftItem({ ...section, sectionSummary: data.chatMessage.content });
-        },
-      });
-    });
-  };
+  const { file, handleDropFile, sections, summarySections, isChatRequesting } =
+    useFile();
 
   return (
     <main
@@ -60,34 +36,13 @@ export const HomeLayout = () => {
             </p>
           </div>
         </DropzoneFileField>
-        {!!items.length && (
-          <div className="mt-8 bg-white px-10 py-8 rounded">
-            {items
-              .sort((a, b) => (a.id < b.id ? -1 : 1))
-              .map((item, index) => (
-                <section className="pt-10" key={`${item.sectionId}-${index}`}>
-                  <h2 className="font-bold">{item.sectionTitle}</h2>
-                  <p className="text-sm whitespace-pre-wrap ">
-                    {item.sectionSummary}
-                  </p>
-                </section>
-              ))}
-          </div>
-        )}
         {file && (
-          <div className="mt-8">
-            <div className="text-center">
-              <Button
-                text="契約書を要約"
-                onClick={handleAiRequest}
-                color="primary"
-                variant="outlined"
-                disabled={isChatRequesting}
-              />
-            </div>
-            <div
-              className="mt-8 bg-white shadow max-h-[60vh] overflow-y-auto mx-auto border border-solid border-gray-200 rounded p-2 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: pdfHtml }}
+          <div className="mt-8 grid grid-cols-2 gap-x-4">
+            <SectionsBlock title="本文" isLoading={false} sections={sections} />
+            <SectionsBlock
+              title="要約"
+              isLoading={isChatRequesting}
+              sections={summarySections}
             />
           </div>
         )}
