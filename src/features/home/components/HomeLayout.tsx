@@ -1,4 +1,8 @@
-import { DropzoneFileField, Icon } from "@keiyomi/components";
+import {
+  DotLoadingAnimation,
+  DropzoneFileField,
+  Icon,
+} from "@keiyomi/components";
 import { useFile } from "@keiyomi/hooks";
 
 export const HomeLayout = () => {
@@ -45,27 +49,22 @@ export const HomeLayout = () => {
               </section>
             ))}
           </div>
-          {isChatRequesting ? (
-            <div>Loading</div>
-          ) : (
-            !!summarySections.length && (
-              <div className="w-full bg-white px-10 py-8 rounded">
-                {summarySections
-                  .sort((a, b) => (a.id < b.id ? -1 : 1))
-                  .map((item, index) => (
-                    <section
-                      className="pt-10"
-                      key={`${item.sectionId}-${index}`}
-                    >
-                      <h2 className="font-bold">{item.sectionTitle}</h2>
-                      <p className="text-sm whitespace-pre-wrap">
-                        {item.sectionSummary}
-                      </p>
-                    </section>
-                  ))}
-              </div>
-            )
-          )}
+          <div className="w-full bg-white px-10 py-8 rounded">
+            {isChatRequesting ? (
+              <DotLoadingAnimation />
+            ) : (
+              summarySections
+                .sort((a, b) => (a.id < b.id ? -1 : 1))
+                .map((item, index) => (
+                  <section className="pt-10" key={`${item.sectionId}-${index}`}>
+                    <h2 className="font-bold">{item.sectionTitle}</h2>
+                    <p className="text-sm whitespace-pre-wrap">
+                      {item.sectionSummary}
+                    </p>
+                  </section>
+                ))
+            )}
+          </div>
         </div>
       </div>
     </main>
