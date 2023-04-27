@@ -2,9 +2,8 @@ import { useState } from "react";
 import { FileRejection } from "react-dropzone";
 import { toast } from "react-toastify";
 
+import { SectionType, SummarySectionType } from "@keiyomi/features/home";
 import { usePdfLoad } from "@keiyomi/hooks";
-
-import { SectionType, SummarySectionType } from "./useHtmlParse";
 
 type ReturnType = {
   file: File | undefined;

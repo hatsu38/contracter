@@ -68,7 +68,7 @@ export const useHtmlParse = (): ReturnType => {
   return {
     htmlParse,
     sections,
-    summarySections,
+    summarySections: summarySections.sort((a, b) => (a.id < b.id ? -1 : 1)),
     isChatRequesting,
   };
 };
