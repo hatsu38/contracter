@@ -3,19 +3,11 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: /
-    schedule:
-      interval: daily
-      time: "09:00"
-      timezone: Asia/Tokyo
     reviewers:
       - hatsu38
     open-pull-requests-limit: 0
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: daily
-      time: "09:00"
-      timezone: Asia/Tokyo
     reviewers:
       - hatsu38
     open-pull-requests-limit: 0
