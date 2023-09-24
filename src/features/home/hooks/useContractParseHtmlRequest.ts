@@ -11,16 +11,12 @@ type ReturnType = {
 };
 
 const systemMessage = `
-* You are to explain the given text in terms that a 10 year old "child can understand".
-* Summarize the text in "simple" and "short" Japanese that is "easy" for children to "understand".
-* Please make your summary in bullet points.
-* Use spoken language, not honorifics.
-* Please explain each clause in a way that children can understand.
-* Use h2 tags for headings for each clause
-* Enclose each clause in a p tag
+* あなたは与えられたテキストをHTMLに変換してください
+* 見出しをh2タグで囲んでください
+* それぞれの条項をpタグで囲んでください
 `;
 
-export const useContractSummaryRequest = (
+export const useContractParseHtmlRequest = (
   currentEmployeeId: string
 ): ReturnType => {
   const { openAiRequest, isChatRequesting } =

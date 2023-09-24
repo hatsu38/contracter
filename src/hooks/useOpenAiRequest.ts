@@ -60,10 +60,9 @@ export const useOpenAiRequest = (authUserName: string): ReturnType => {
     }
     try {
       const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-3.5-turbo-16k",
         messages: messages,
         user: authUserName,
-        max_tokens: 2048,
         temperature: 0,
       });
       setFalse();
