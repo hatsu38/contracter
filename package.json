@@ -21,7 +21,7 @@
     "eslint-config-next": "13.4.4",
     "next": "13.4.4",
     "openai": "^3.2.1",
-    "pdfjs-dist": "^3.7.107",
+    "pdfjs-dist": "^3.11.174",
     "postcss": "8.4.30",
     "react": "18.2.0",
     "react-dom": "18.2.0",
