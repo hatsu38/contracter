@@ -10,7 +10,6 @@ type ReturnType = {
   fileUrl: string | undefined;
   text: string;
   defaultText: string;
-  isContractParseRequesting: boolean;
   isContractSummaryRequesting: boolean;
   handleDropFile: (
     acceptedFiles: File[],
@@ -19,13 +18,8 @@ type ReturnType = {
 };
 
 export const useFile = (): ReturnType => {
-  const {
-    text,
-    defaultText,
-    isContractParseRequesting,
-    isContractSummaryRequesting,
-    loadPdfUrl,
-  } = usePdfLoad();
+  const { text, defaultText, isContractSummaryRequesting, loadPdfUrl } =
+    usePdfLoad();
   const [file, setFile] = useState<File | undefined>();
 
   const fileUrl = file ? URL.createObjectURL(file) : undefined;
@@ -51,7 +45,6 @@ export const useFile = (): ReturnType => {
     fileUrl,
     text,
     defaultText,
-    isContractParseRequesting,
     isContractSummaryRequesting,
     setFile,
     handleDropFile,

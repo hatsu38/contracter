@@ -9,7 +9,6 @@ export const HomeLayout = () => {
     handleDropFile,
     text,
     defaultText,
-    isContractParseRequesting,
     isContractSummaryRequesting,
   } = useFile();
 
@@ -44,11 +43,7 @@ export const HomeLayout = () => {
         </DropzoneFileField>
         {file && (
           <div className="mt-8 grid grid-cols-2 gap-x-4">
-            <SectionsBlock
-              title="本文"
-              isLoading={isContractParseRequesting}
-              text={defaultText}
-            />
+            <SectionsBlock title="本文" isLoading={false} text={defaultText} />
             <SectionsBlock
               title="要約"
               isLoading={isContractSummaryRequesting}
