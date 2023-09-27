@@ -1,19 +1,18 @@
 import { FC } from "react";
 
 import { DotLoadingAnimation } from "@keiyomi/components";
-import { SectionType, SummarySectionType } from "@keiyomi/features/home";
 
 type PropsType = {
   isLoading: boolean;
   title: string;
-  sections: SectionType[] | SummarySectionType[];
+  text: string;
   className?: string;
 };
 
 export const SectionsBlock: FC<PropsType> = ({
   isLoading,
   title,
-  sections,
+  text,
   className = "",
 }) => {
   const array = ["🤖", "🦾", "⚒️", "⏳", "🏋️"];
@@ -23,6 +22,20 @@ export const SectionsBlock: FC<PropsType> = ({
     <div
       className={`shadow-lg w-full bg-white px-10 py-8 rounded-lg ${className}`}
     >
+      <style>
+        {`
+          .myStyledDiv h2 {
+            color: rgb(75 85 99);
+            font-weight: 700;
+            margin-top: 0.75rem;
+          }
+
+          .myStyledDiv p {
+            font-size: 14px;
+            white-space: pre-wrap;
+          }
+        `}
+      </style>
       <h3 className="text-center font-bold text-xl">{title}</h3>
       {isLoading ? (
         <div className="mt-8 text-center text-sm text-gray-600 space-y-3">
@@ -30,16 +43,10 @@ export const SectionsBlock: FC<PropsType> = ({
           <DotLoadingAnimation className="justify-center" />
         </div>
       ) : (
-        sections.map((item, index) => (
-          <section className="pt-10" key={`${item.sectionId}-${index}`}>
-            <h2 className="text-gray-600 font-bold">{item.sectionTitle}</h2>
-            <p className="text-sm whitespace-pre-wrap">
-              {"sectionSummary" in item
-                ? item.sectionSummary
-                : item.sectionContent}
-            </p>
-          </section>
-        ))
+        <div
+          className="myStyledDiv overflow-scroll max-h-[60vh]"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
       )}
     </div>
   );

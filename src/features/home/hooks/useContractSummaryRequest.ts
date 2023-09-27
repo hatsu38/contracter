@@ -11,9 +11,13 @@ type ReturnType = {
 };
 
 const systemMessage = `
-* あなたは与えられたテキストを10歳の子どもにもわかる言葉で説明してください
-* 子供たちが理解しやすいような簡単な短い日本語で話してください
-* 敬語ではなく話し言葉を使ってください
+* You are to explain the given text in terms that a 10 year old "child can understand".
+* Summarize the text in "simple" and "short" Japanese that is "easy" for children to "understand".
+* Please make your summary in bullet points.
+* Use spoken language, not honorifics.
+* Please explain each clause in a way that children can understand.
+* Use h2 tags for headings for each clause
+* Enclose each clause in a p tag
 `;
 
 export const useContractSummaryRequest = (
