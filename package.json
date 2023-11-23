@@ -13,7 +13,7 @@
     "format:fix": "prettier --write"
   },
   "dependencies": {
-    "@types/node": "20.7.0",
+    "@types/node": "20.9.4",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.16",
